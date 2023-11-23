@@ -1,4 +1,4 @@
-from datetime import timezone
+from django.utils import timezone
 
 from django.db import models
 
@@ -85,3 +85,61 @@ class Users(models.Model):
         return f"Users {self.id}"
 
 
+class DatabaseHandler:
+    def add_pereval(self, beauty_title, title, other_titles, connect, add_time, coords_data, levels, raw_data):
+        # Создаем объект координат
+        coords = Coords.objects.create(**coords_data)
+
+        # Создаем объект перевала
+        pereval = PerevalAdded.objects.create(
+            date_added=timezone.now(),
+            beauty_title=beauty_title,
+            title=title,
+            other_titles=other_titles,
+            connect=connect,
+            add_time=add_time,
+            coord_id=coords,
+            winter_level=levels.get('winter', ''),
+            summer_level=levels.get('summer', ''),
+            autumn_level=levels.get('autumn', ''),
+            spring_level=levels.get('spring', ''),
+            raw_data=raw_data,
+            status='new'  # Устанавливаем значение поля status равным new
+        )
+
+        return pereval
+
+    def add_area(self, id_parent, title):
+        # Создаем объект области
+        area = PerevalAreas.objects.create(
+            id_parent=id_parent,
+            title=title
+        )
+
+        return area
+
+    def add_image(self, img_data):
+        # Создаем объект изображения
+        image = PerevalImages.objects.create(
+            date_added=timezone.now(),
+            img=img_data
+        )
+
+        return image
+
+    def link_image_to_pereval(self, pereval, image):
+        # Создаем связь между изображением и перевалом
+        link = PerevalImagesLink.objects.create(
+            pereval=pereval,
+            image=image
+        )
+
+        return link
+
+    def add_activity_type(self, title):
+        # Создаем тип активности
+        activity_type = SprActivitiesTypes.objects.create(
+            title=title
+        )
+
+        return activity_type
