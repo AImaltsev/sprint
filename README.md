@@ -32,18 +32,15 @@
 5. Установите подключение к БД.
 
    Нужно создать файл .env и прописать в нём настройки в соответствии с настройками вашей БД в таком формате:
-
+   ```bash
    FSTR_DB_NAME='Имя базы данных'
-
    FSTR_DB_LOGIN='Пользователь базы данных'
-   
    FSTR_DB_PASS='пароль'
-   
    FSTR_DB_HOST='хост'
-   
    FSTR_DB_PORT=порт
+   ```
 
-   *Используется БД PostreSQL
+   _*Используется БД PostreSQL_
 
 ## Использование
 
@@ -57,3 +54,29 @@
 
 ```bash
 curl -X POST http://localhost:8000/api/submitData/ -H "Content-Type: application/json" -d '{"beauty_title": "Mount Everest", "title": "Everest", ...}'
+```
+
+## Получение информации о перевале по ID
+Используйте метод GET для /api/submitData/<id>.
+
+Пример:
+
+```bash
+curl http://localhost:8000/api/submitData/1/
+```
+
+## Редактирование перевала по ID
+Используйте метод PATCH для /api/submitData/<id>. Редактирование доступно только для записей со статусом "new".
+
+Пример:
+```bash
+curl -X PATCH http://localhost:8000/api/submitData/1/ -H "Content-Type: application/json" -d '{"beauty_title": "New Title", ...}'
+```
+
+## Получение списка перевалов по email пользователя
+Используйте метод GET для /api/submitData/?user__email=<email>.
+
+Пример:
+```bash
+curl http://localhost:8000/api/submitData/?user__email=user@example.com
+```
