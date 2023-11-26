@@ -6,12 +6,12 @@ from rest_framework import permissions
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Your API",
+        title="Sprint API",
         default_version='v1',
-        description="Your API description",
-        terms_of_service="https://www.yourapp.com/terms/",
-        contact=openapi.Contact(email="contact@yourapp.com"),
-        license=openapi.License(name="Your License"),
+        description="Проект Sprint - это Django-проект для работы с данными о перевалах. ",
+        terms_of_service="http://127.0.0.1:8000/",
+        contact=openapi.Contact(email="boomer47.am@gmail.com"),
+        license=openapi.License(name="Free License"),
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
